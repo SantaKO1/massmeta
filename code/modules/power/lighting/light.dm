@@ -186,6 +186,14 @@
 		return
 	. += mutable_appearance(overlay_icon, base_state)
 
+// MASSMETA EDIT ADDITION BEGIN - AESTHETICS
+#define LIGHT_ON_DELAY_UPPER (2 SECONDS)
+#define LIGHT_ON_DELAY_LOWER (0.25 SECONDS)
+/// Dynamically calculate nightshift brightness
+#define NIGHTSHIFT_LIGHT_MODIFIER 0.15
+#define NIGHTSHIFT_COLOR_MODIFIER 0.15
+// MASSMETA EDIT END
+
 // Area sensitivity is traditionally tied directly to power use, as an optimization
 // But since we want it for fire reacting, we disregard that
 /obj/machinery/light/setup_area_power_relationship()
@@ -206,10 +214,10 @@
 
 /obj/machinery/light/proc/handle_fire(area/source, new_fire)
 	SIGNAL_HANDLER
-	update()
+	update(instant = TRUE, play_sound = FALSE) // MASSMETA EDIT CHANGE - ORIGINAL: update()
 
 // update the icon_state and luminosity of the light depending on its state
-/obj/machinery/light/proc/update(trigger = TRUE)
+/obj/machinery/light/proc/update(trigger = TRUE, instant = FALSE, play_sound = TRUE) // MASSMETA EDIT CHANGE
 	switch(status)
 		if(LIGHT_BROKEN,LIGHT_BURNED,LIGHT_EMPTY)
 			on = FALSE
@@ -228,15 +236,31 @@
 			power_set = fire_power
 			brightness_set = fire_brightness
 		else if (nightshift_enabled)
-			brightness_set = nightshift_brightness
-			power_set = nightshift_light_power
+			brightness_set -= brightness_set * NIGHTSHIFT_LIGHT_MODIFIER // MASSMETA EDIT CHANGE - ORIGINAL: brightness_set = nightshift_brightness
+			power_set -= power_set * NIGHTSHIFT_LIGHT_MODIFIER // MASSMETA EDIT CHANGE - ORIGINAL: power_set = nightshift_light_power
 			if(!color)
 				color_set = nightshift_light_color
+				// MASSMETA EDIT ADDITION START - Dynamic nightshift color
+				if(!color_set)
+					// Adjust light values to be warmer. I doubt caching would speed this up by any worthwhile amount, as it's all very fast number and string operations.
+					// Convert to numbers for easier manipulation.
+					var/list/color_parts = rgb2num(bulb_colour)
+					var/red = color_parts[1]
+					var/green = color_parts[2]
+					var/blue = color_parts[3]
+
+					red += round(red * NIGHTSHIFT_COLOR_MODIFIER)
+					green -= round(green * NIGHTSHIFT_COLOR_MODIFIER * 0.3)
+					red = clamp(red, 0, 255) // clamp to be safe, or you can end up with an invalid hex value
+					green = clamp(green, 0, 255)
+					blue = clamp(blue, 0, 255)
+					color_set = rgb(red, green, blue) // Splice the numbers together and turn them back to hex.
+				// MASSMETA EDIT ADDITION END
 		else if (major_emergency)
 			color_set = bulb_low_power_colour
 			brightness_set = brightness * bulb_major_emergency_brightness_mul
 		var/matching = light && brightness_set == light.light_range && power_set == light.light_power && color_set == light.light_color
-		if(!matching)
+		if(!matching && (maploaded || instant)) // MASSMETA EDIT CHANGE - ORIGINAL: if(!matching)
 			switchcount++
 			if( prob( min(60, (switchcount**2)*0.01) ) )
 				if(trigger)
@@ -248,6 +272,15 @@
 					l_power = power_set,
 					l_color = color_set
 					)
+		// MASSMETA EDIT ADDITION START
+				maploaded = FALSE
+				if(play_sound)
+					playsound(src.loc, 'massmeta/aesthetics/lights/sound/light_on.ogg', 65, 1)
+		else if(!matching && !turning_on)
+			switchcount++
+			turning_on = TRUE
+			addtimer(CALLBACK(src, PROC_REF(delayed_turn_on), trigger, play_sound, color_set, power_set, brightness_set), rand(LIGHT_ON_DELAY_LOWER, LIGHT_ON_DELAY_UPPER))
+		// MASSMETA EDIT ADDITION END
 	else if(has_emergency_power(LIGHT_EMERGENCY_POWER_USE) && !turned_off())
 		use_power = IDLE_POWER_USE
 		low_power_mode = TRUE
@@ -274,6 +307,13 @@
 			removeStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
 			static_power_used = static_power_used_new
 			addStaticPower(static_power_used, AREA_USAGE_STATIC_LIGHT)
+
+// MASSMETA EDIT ADDITION BEGIN - AESTHETICS
+#undef LIGHT_ON_DELAY_UPPER
+#undef LIGHT_ON_DELAY_LOWER
+#undef NIGHTSHIFT_LIGHT_MODIFIER
+#undef NIGHTSHIFT_COLOR_MODIFIER
+// MASSMETA EDIT ADDITION END
 
 /obj/machinery/light/update_atom_colour()
 	..()
@@ -504,13 +544,13 @@
 			if(status != LIGHT_OK || !has_power())
 				break
 			on = !on
-			update(FALSE)
+			update(FALSE, TRUE) //MASSMETA EDIT CHANGE - ORIGINAL: update(FALSE)
 			sleep(rand(5, 15))
 		if(has_power())
 			on = (status == LIGHT_OK)
 		else
 			on = FALSE
-		update(FALSE)
+		update(FALSE, TRUE) //MASSMETA EDIT CHANGE - ORIGINAL: update(FALSE)
 		. = TRUE //did we actually flicker?
 	flickering = FALSE
 

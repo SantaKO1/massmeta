@@ -93,3 +93,7 @@
 #include "code\modules\clothing\shoes\sneakers.dm"
 #include "code\modules\client\preferences\pride_pin.dm"
 #include "code\datums\quirks\neutral_quirks\pride_pin.dm"
+
+//better lightning (port from skyrat)
+#include "aesthetics\lights\code\lighting.dm"
+#include "aesthetics\lightswitch\code\lightswitch.dm"
