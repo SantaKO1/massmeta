@@ -22,7 +22,7 @@
 
 ### Defines:
 
-- N/A
+- ~meta_defines/techweb_nodes.dm
 
 
 ### TGUI Files:
