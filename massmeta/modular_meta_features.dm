@@ -13,7 +13,6 @@
 
 // BEGIN_INCLUDE
 #include "features\additional_circuit\includes.dm"
-#include "features\hardsuits\includes.dm"
 #include "features\kvass\includes.dm"
 #include "features\smites\includes.dm"
 #include "features\soviet_crate\includes.dm"
@@ -75,8 +74,6 @@
 #include "game\objects\items\storage\garment.dm"
 #include "code\modules\hooch.dm"
 #include "code\datums\quirks\positive_quirks\augmented.dm"
-#include "code\modules\cargo\markets\market_items\clothing.dm"
-#include "code\modules\jobs\job_types\clown.dm"
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
 
