@@ -305,7 +305,7 @@ Some memes and gags included.
 		if(prob(gearbox_failure_count * 10) || prob(33))
 			if(gearbox_failure_count == 10)
 				if(canmove)
-					playsound(src, pick('massmeta/features/cheburek_car/sound/gear_blyat.ogg', 'massmeta/sounds/vehicles/gear_nah.ogg'), 100)
+					playsound(src, pick('massmeta/features/cheburek_car/sound/gear_blyat.ogg', 'massmeta/features/cheburek_car/sound/gear_nah.ogg'), 100)
 					toggle_blinkers()
 				canmove = FALSE
 				balloon_alert(user, "gearbox broken")
