@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "features\additional_circuit\includes.dm"
+#include "features\cheburek_car\includes.dm"
 #include "features\kvass\includes.dm"
 #include "features\smites\includes.dm"
 #include "features\soviet_crate\includes.dm"
@@ -77,11 +78,6 @@
 #include "code\datums\quirks\positive_quirks\augmented.dm"
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
-
-//cheburek Car
-#include "code\modules\vehicles\cars\cheburek.dm"
-#include "code\modules\vehicles\vehicle_actions.dm"
-#include "code\modules\cargo\packs\imports.dm"
 
 //buts
 #include "code\modules\surgery\organs\internal\butts\butts.dm"
