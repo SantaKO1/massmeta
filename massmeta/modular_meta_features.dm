@@ -79,7 +79,6 @@
 #include "code\modules\hooch.dm"
 #include "code\datums\quirks\positive_quirks\augmented.dm"
 #include "code\modules\map_vote.dm"
-#include "code\modules\hallucination\fake_chat.dm"
 
 //buts
 #include "code\modules\surgery\organs\internal\butts\butts.dm"
