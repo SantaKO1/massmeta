@@ -1,3 +1,4 @@
+// ORIGINAL FILE: code/modules/clothing/masks/moustache.dm
 /obj/item/clothing/mask/fakemoustache/italian/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
@@ -9,9 +10,9 @@
 /proc/oguzok_moustache_words_replace_ru(word)
 	var/static/list/oguzok_words
 	if(!oguzok_words)
-		oguzok_words = strings(OGUZOK_PHRASES_FILE, "oguzok")
+		oguzok_words = strings("massmeta/oguzok.json", "oguzok")
 
-	var/match = oguzok_words[lowertext(word)]
+	var/match = oguzok_words[LOWER_TEXT(word)]
 	if(!match)
 		return word
 
