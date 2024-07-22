@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "features\additional_circuit\includes.dm"
 #include "features\cheburek_car\includes.dm"
+#include "features\del_required_experiments\includes.dm"
 #include "features\discord_verification\includes.dm"
 #include "features\hierophant_club_resprite\includes.dm"
 #include "features\kvass\includes.dm"
@@ -52,7 +53,6 @@
 #include "code\game\objects\items\tools\wirecutters.dm"
 #include "code\game\objects\items\tools\wrench.dm"
 #include "code\obj\items\storage\boxes\clothes_boxes.dm"
-#include "code\modules\research.dm"
 #include "code\obj\structures\display_case.dm"
 #include "code\modules\antags\uplink_items.dm"
 #include "code\obj\items\clothing\belt.dm"
