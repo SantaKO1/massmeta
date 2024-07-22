@@ -224,8 +224,7 @@ const GenderButton = (props: {
       placement="right-end"
       content={
         <Stack backgroundColor="white" ml={0.5} p={0.3}>
-		  {/* MASSMETA EDIT CHANGE (lgbt_removal) */}
-          {/* ORIGINAL: {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map( */}
+		  {/* MASSMETA EDIT CHANGE (lgbt_removal) ORIGINAL: {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map( */}
 		  {[Gender.Male, Gender.Female].map(
             (gender) => {
               return (
