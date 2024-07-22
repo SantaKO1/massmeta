@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "features\additional_circuit\includes.dm"
 #include "features\cheburek_car\includes.dm"
+#include "features\discord_verification\includes.dm"
 #include "features\hierophant_club_resprite\includes.dm"
 #include "features\kvass\includes.dm"
 #include "features\lead_pipe\includes.dm"
@@ -32,7 +33,6 @@
 
 #include "code\_globalvars\lists\names.dm"
 #include "code\__HELPERS\names.dm"
-#include "interface\interface.dm"
 #include "code\modules\clothing\clothing.dm"
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\clothing\suits\chaplainsuits.dm"

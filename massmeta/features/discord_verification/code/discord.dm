@@ -1,5 +1,6 @@
 /client/verb/discord()
 	set name = "discord"
+	set desc = "Visit the discord."
 	set hidden = TRUE
 
 	if(alert("This will open our Discord in your browser. Are you sure?", "Discord", "Yes", "No") != "Yes")
